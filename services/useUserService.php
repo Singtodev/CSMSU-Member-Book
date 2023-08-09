@@ -8,16 +8,26 @@ class UseUserService {
     }
 
     public function getAllUser() {
-        $sql = "SELECT *, YEAR(CURDATE()) - YEAR(m_birthday) - (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(m_birthday, '%m%d')) AS m_age FROM members;";
+        $sql = "SELECT *, YEAR(CURDATE()) - YEAR(m_birthday) - (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(m_birthday, '%m%d')) AS m_age FROM members ORDER BY m_id ASC";
         $result = $this->db->query($sql);
         return $result;
     }
 
     public function getAllUserBySearch($search_word){
-            $sql = "SELECT * FROM members WHERE 
-            m_fname LIKE '%$search_word%' OR m_lname LIKE '%$search_word%'";
-            $result = $this->db->query($sql);
-            return $result;
+        $search_word = '%' . $search_word . '%';
+
+        $sql = "SELECT * FROM members WHERE m_fname LIKE ? OR m_lname LIKE ?";
+        $stmt = $this->db->prepare($sql);
+        
+        $stmt->bind_param("ss", $search_word, $search_word);
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        // Fetch the results if needed
+        // $rows = $result->fetch_all(MYSQLI_ASSOC);
+        
+        return $result;
     }
 
     public function getCountByGender($gender_type){

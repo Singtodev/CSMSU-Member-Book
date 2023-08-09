@@ -61,12 +61,13 @@
                                 hover:scale-105 
                                 transition-all 
                                 duration-300 
-                                bg-white
-                                text-black
+                                text-white
                                 flex
                                 flex-row
                                 gap-2
                                 items-center
+                                                                hover:bg-white
+                                hover:text-black
                                 px-5 py-2 rounded-xl"><i class="fa-solid fa-house hover:text-black"></i>Homepage</div></a>
                             <a href="./add.php"><div class="
                                 navbar-link 
@@ -80,7 +81,8 @@
                                 flex-row
                                 gap-2
                                 items-center
-                                hover:bg-white hover:text-black px-5 py-2 rounded-xl"> <i class="fa-solid fa-user-plus hover:text-black"></i> Add Member</div></a>
+                                hover:bg-white
+                                hover:text-black px-5 py-2 rounded-xl"> <i class="fa-solid fa-user-plus hover:text-black"></i> Add Member</div></a>
                             <a href="./search.php"><div class="
                                 navbar-link 
                                 uppercase 
@@ -93,7 +95,8 @@
                                 flex-row
                                 gap-2
                                 items-center
-                                hover:bg-white hover:text-black px-5 py-2 rounded-xl"><i class="fa-solid fa-magnifying-glass hover:text-black"></i>Search Member</div></a>
+                                bg-white
+                                text-black hover:text-black px-5 py-2 rounded-xl"><i class="fa-solid fa-magnifying-glass hover:text-black"></i> Search Member</div></a>
                                 <a href="./contact_us.php"> <div class="
                                 navbar-link 
                                 uppercase 
@@ -144,110 +147,27 @@
 
         <div class="w-[70%]">
 
+        
         <div class="container flex items-center justify-start mt-4 mb-2 py-2">
-                <div class="group px-5  flex flex-row items-center bg-white inline-block  gap-2 w-[34rem] transition-all duration-300 rounded-2xl py-2 focus-within:rounded-3xl px-1 focus-within:border-sky-500 focus-within:ring-sky-500  focus-within:shadow-2xl">
-                    <input id="search-input" type="text" 
-                    placeholder="What do you mind ?"
-                    class="focus:outline-none  py-2  rounded-2xl transition-all duration-300   w-full h-full border-none outline-none" >
+                <div class="group px-5  flex flex-row items-center inline-block  gap-2 w-[34rem] transition-all duration-300 rounded-2xl py-2 focus-within:rounded-3xl px-1 focus-within:border-sky-500 focus-within:ring-sky-500  focus-within:shadow-2xl">
+                    <div class="focus:outline-none  py-5  rounded-2xl transition-all duration-300   w-full h-full border-none outline-none" ></div>
                     <div class="w-[3rem] py-3 rounded-md flex items-center justify-center text-black  h-full">
-                        <i class="fa-solid fa-magnifying-glass text-black"></i>
+    
                     </div>
                 </div>
         </div>
 
-        <div class="container min-w-[500px] min-h-[650px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
-            <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">List of Members</span> </div>
-            
-            <div class="w-full  transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid grid-cols-8">
-                    <div class="flex items-center px-4 xl:px-10 ">
-                        Avatar
-                    </div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> Number</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> Full Name</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap flex justify-center"> Age</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> Birth Day</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap col-span-2"> Email</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> </div>
-            </div>
-            <div id="search-results" class="w-full bg-white  h-[650px]  p-4 overflow-y-scroll overflow-x-hidden py-4" >
-
-                    <?php
-
-                        if($user_all->num_rows > 0){
-                            
-                            while($row = $user_all->fetch_assoc()){
-                                $personCard = new CardPeople(
-                                    $row['m_id'],
-                                    $row['m_email'],
-                                    $row['m_gender'] , 
-                                    $row['m_birthday'],
-                                    $row['m_fname'], 
-                                    $row['m_lname'], 
-                                    $row['m_age'],
-                                    $row['m_avatar_url']
-                                );
-                                echo $personCard->buildCard();
-                            }
-
-                        }
-
-                    ?>
-
-            </div>
+        <div class="container min-w-[500px] min-h-[800px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
+            <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> 
+                <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">Search Members</span>
+             </div>
         </div>
 
-        <div class="container min-w-[500px] min-h-[250px] h-[250px] my-1 mt-12">
-                <div class="grid grid-cols-3 gap-x-10 w-full h-full">
-                    <div class="relative flex bg-pink-400 items-center hover:scale-105 cursor-pointer transition-all duration-300 justify-center  rounded-xl shadow-xl w-full h-full">
-                        <div class="absolute text-black bg-white px-4 rounded-md top-4 left-4 text-xl ">Female</div>
-                        <div class="count text-white text-4xl"><?php $user_male_count = $user_srv->getCountByGender('f'); ?></div>
-                    </div>
-                    <div class="relative flex bg-cyan-400 items-center hover:scale-105 cursor-pointer transition-all duration-300 justify-center  rounded-xl shadow-xl w-full h-full">
-                    <div class="absolute text-black bg-white px-4 rounded-md top-4 left-4 text-xl ">Male</div>
-                        <div class="count text-white text-4xl"><?php $user_female_count = $user_srv->getCountByGender('m'); ?></div>
-                    </div>
-                    <div class="relative flex bg-white items-center hover:scale-105 cursor-pointer transition-all duration-300 justify-center rounded-xl shadow-xl w-full h-full">
-                    <div class="absolute text-black bg-white px-4 rounded-md top-4 left-4 text-xl ">Others</div>
-                        <div class="count text-black text-4xl"><?php $user_other_count = $user_srv->getCountByGender(''); ?></div>
-                    </div>
-                </div>
-        </div>
+
 
         </div>
 
-        <script>
 
-        $(document).ready(function() {
-            $('#search-input').on('input', function() {
-                var searchTerm = $(this).val();
-                if (searchTerm.length > 1) {
-                    $.ajax({
-                        url: './utils/search.php', // Path to your server-side search script
-                        method: 'GET',
-                        data: { search: searchTerm },
-                        success: function(response) {   
-                            $('#search-results').html(response);
-                        },
-                        error: function() {
-                            console.log("search error");
-                        }
-                    });
-                } else if(searchTerm.length == 0) {
-                    $.ajax({
-                        url: './utils/search.php', // Path to your server-side search script
-                        method: 'GET',
-                        data: { search: searchTerm },
-                        success: function(response) {   
-                            $('#search-results').html(response);
-                        },
-                        error: function() {
-                            console.log("search error");
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 
 
 
