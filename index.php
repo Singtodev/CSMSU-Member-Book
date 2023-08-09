@@ -144,6 +144,8 @@
         </div>
 
 
+        <div class="w-[70%]">
+
         <div class="container flex items-center justify-start mt-4 mb-2 py-2">
                 <div class="group px-5  flex flex-row items-center bg-white inline-block  gap-2 w-[34rem] transition-all duration-300 rounded-2xl py-2 focus-within:rounded-3xl px-1 focus-within:border-sky-500 focus-within:ring-sky-500  focus-within:shadow-2xl">
                     <input type="text" 
@@ -156,7 +158,7 @@
         </div>
 
         <div class="container min-w-[500px] min-h-[650px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
-        <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 ">Search Found 6 Records</span> </div>
+            <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 ">Search Found 6 Records</span> </div>
             <div class="w-full bg-white  h-[650px]  p-4 overflow-y-scroll overflow-x-hidden py-4" >
 
                     <?php
@@ -169,20 +171,21 @@
                             19,
                             "https://scontent.fkkc3-1.fna.fbcdn.net/v/t39.30808-6/355086068_1460721331367352_1913272415591343693_n.jpg?_nc_cat=105&cb=99be929b-59f725be&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeGD1jTAOwnIQ5YcKbBRAm-y3N6WrlCcdXnc3pauUJx1eQqjbHnHnGNNxbeaNWTd22TejGzrvhEY-FnF0RwujCf2&_nc_ohc=v0brmEX5BrAAX9klWWF&_nc_ht=scontent.fkkc3-1.fna&oh=00_AfDdHbkoC4fkpH33U13lNGhH7X1xYJre-E3BNdLIKWT61Q&oe=64D6F3C0"
                         );
-                        $personCard1 = new CardPeople(
-                            65011212038,
-                            "female" ,
-                             "21 สิงหาคม 2546" ,
-                             "Singharat", 
-                             "Bunphim", 
-                             18,
-                             "https://scontent.fkkc3-1.fna.fbcdn.net/v/t39.30808-6/355086068_1460721331367352_1913272415591343693_n.jpg?_nc_cat=105&cb=99be929b-59f725be&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeGD1jTAOwnIQ5YcKbBRAm-y3N6WrlCcdXnc3pauUJx1eQqjbHnHnGNNxbeaNWTd22TejGzrvhEY-FnF0RwujCf2&_nc_ohc=v0brmEX5BrAAX9klWWF&_nc_ht=scontent.fkkc3-1.fna&oh=00_AfDdHbkoC4fkpH33U13lNGhH7X1xYJre-E3BNdLIKWT61Q&oe=64D6F3C0"
-                            );
                         echo $personCard->buildCard();
+                        $personCard1 = new CardPeople(
+                            65010910246,
+                            "female" ,
+                             "22 สิงหาคม 2546" ,
+                             "Ratchanida", 
+                             "Chommuang", 
+                             19,
+                             "https://scontent.fbkk22-7.fna.fbcdn.net/v/t39.30808-6/358562348_227406316916619_4034080238182470911_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEp9Hc7zBaDaOX0meZkH65nIERS-pnAPNcgRFL6mcA81x7P1k--1nU4tzn5gitN0hkLCGnQL0teLG9NsZr_I72u&_nc_ohc=Wmsp80fvuWEAX8SKFlC&_nc_zt=23&_nc_ht=scontent.fbkk22-7.fna&oh=00_AfCovZtaQ7FZSF7CxPMozNlQ7IfkuXeayspFlVe4L9jzHg&oe=64D8FF54"
+                            );
+
                         echo $personCard1->buildCard();
                     ?>
 
-                    <div class="w-full hover:scale-95 cursor-pointer transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid-cols-6 ">
+                    <!-- <div class="w-full hover:scale-95 cursor-pointer transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid-cols-6 ">
                             <div class="
                                 flex items-center px-6 ">
                                 <div class="
@@ -341,7 +344,7 @@
                             <div class="flex items-center text-slate-600 tracking-wide text-xl">26</div>
                             <div class="flex items-center text-slate-600 tracking-wide text-xl">6 สิงหาคม 2546 </div>
                             <div class="flex items-center text-slate-600 tracking-wide text-xl"><i class="fa-solid fa-person text-3xl text-cyan-400"></i></div>
-                    </div>
+                    </div> -->
                     
                     
 
@@ -364,6 +367,10 @@
                     </div>
                 </div>
         </div>
+
+        </div>
+
+
 
     </div>
 
