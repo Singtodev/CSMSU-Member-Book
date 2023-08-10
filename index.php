@@ -5,10 +5,12 @@
     include("./utils/condb.php");
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
-    
+    include_once('./components/navbar.php');
     
     $user_srv = new UseUserService($condb);
     $user_all = $user_srv->getAllUser();
+    $activePage = 0;
+    $navbar = new Navbar($activePage);
 ?>
 
 <!doctype html>
@@ -51,66 +53,7 @@
 
             </div>
 
-            <div class="navbar_container_middle flex flex-row gap-3 items-center">
-                <div class="navbar menu flex items-center p-3 gap-x-6 font-bold">
-                            <a href="./index.php"><div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300 
-                                bg-white
-                                text-black
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                px-5 py-2 rounded-xl"><i class="fa-solid fa-house hover:text-black"></i>Homepage</div></a>
-                            <a href="./add.php"><div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300 
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                hover:bg-white hover:text-black px-5 py-2 rounded-xl"> <i class="fa-solid fa-user-plus hover:text-black"></i> Add Member</div></a>
-                            <a href="./search.php"><div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                hover:bg-white hover:text-black px-5 py-2 rounded-xl"><i class="fa-solid fa-magnifying-glass hover:text-black"></i>Search Member</div></a>
-                                <a href="./contact_us.php"> <div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300 
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                hover:bg-white hover:text-black px-5 py-2 rounded-xl"><i class="fa-solid fa-id-card-clip hover:text-black"></i>Contacts US</div></a>
-
-                    </div>
-            </div>
-
+            <?php $navbar->build(); ?>
             <div class="navbar_container_right flex flex-row gap-x-3 items-center">
 
                         <div class="avatar flex flex-row items-center gap-x-1">
@@ -156,7 +99,7 @@
         </div>
 
         <div class="container min-w-[500px] min-h-[650px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
-            <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">List of Members</span> </div>
+            <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">List of Members( <?php echo $user_all->num_rows ?> )</span> </div>
             
             <div class="w-full  transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid grid-cols-8">
                     <div class="flex items-center px-4 xl:px-10 ">
@@ -208,7 +151,7 @@
                     </div>
                     <div class="relative flex bg-white items-center hover:scale-105 cursor-pointer transition-all duration-300 justify-center rounded-xl shadow-xl w-full h-full">
                     <div class="absolute text-black bg-white px-4 rounded-md top-4 left-4 text-xl ">Others</div>
-                        <div class="count text-black text-4xl"><?php $user_other_count = $user_srv->getCountByGender(''); ?></div>
+                        <div class="count text-black text-4xl"><?php $user_other_count = $user_srv->getCountByGender('o'); ?></div>
                     </div>
                 </div>
         </div>

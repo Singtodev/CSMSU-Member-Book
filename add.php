@@ -5,10 +5,12 @@
     include("./utils/condb.php");
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
-    
+    include_once('./components/navbar.php');
     
     $user_srv = new UseUserService($condb);
     $user_all = $user_srv->getAllUser();
+    $activePage = 1;
+    $navbar = new Navbar($activePage);
 ?>
 
 <!doctype html>
@@ -51,67 +53,8 @@
 
             </div>
 
-            <div class="navbar_container_middle flex flex-row gap-3 items-center">
-                <div class="navbar menu flex items-center p-3 gap-x-6 font-bold">
-                            <a href="./index.php"><div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300 
-                                text-white
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                hover:bg-white
-                                hover:text-black
-                                px-5 py-2 rounded-xl"><i class="fa-solid fa-house hover:text-black"></i>Homepage</div></a>
-                            <a href="./add.php"><div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300 
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                bg-white
-                                text-black px-5 py-2 rounded-xl"> <i class="fa-solid fa-user-plus hover:text-black"></i> Add Member</div></a>
-                            <a href="./search.php"><div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                hover:bg-white hover:text-black px-5 py-2 rounded-xl"><i class="fa-solid fa-magnifying-glass hover:text-black"></i> Search Member</div></a>
-                                <a href="./contact_us.php"> <div class="
-                                navbar-link 
-                                uppercase 
-                                tracking-wide 
-                                cursor-pointer 
-                                hover:scale-105 
-                                transition-all 
-                                duration-300 
-                                flex
-                                flex-row
-                                gap-2
-                                items-center
-                                hover:bg-white hover:text-black px-5 py-2 rounded-xl"><i class="fa-solid fa-id-card-clip hover:text-black"></i>Contacts US</div></a>
-
-                    </div>
-            </div>
+            
+            <?php $navbar->build(); ?>
 
             <div class="navbar_container_right flex flex-row gap-x-3 items-center">
 

@@ -16,7 +16,7 @@ class UseUserService {
     public function getAllUserBySearch($search_word){
         $search_word = '%' . $search_word . '%';
 
-        $sql = "SELECT * FROM members WHERE m_fname LIKE ? OR m_lname LIKE ?";
+        $sql = "SELECT *, YEAR(CURDATE()) - YEAR(m_birthday) - (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(m_birthday, '%m%d')) AS m_age FROM members WHERE m_fname LIKE ? OR m_lname LIKE ?";
         $stmt = $this->db->prepare($sql);
         
         $stmt->bind_param("ss", $search_word, $search_word);
