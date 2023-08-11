@@ -22,10 +22,9 @@ class Navbar {
                     tracking-wide 
                     cursor-pointer 
                     hover:scale-105 
-                    hover:bg-white;
                     transition-all 
                     duration-300 
-                    '.($this->activeIndex == $index ? "bg-white text-black" : "text-white").'
+                    '.($this->activeIndex == $index ? "bg-white text-black" : "text-white hover:bg-white hover:text-black").'
                     flex
                     flex-row
                     gap-2
