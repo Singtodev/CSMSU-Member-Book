@@ -11,22 +11,25 @@
     $activePage = 1;
     $navbar = new Navbar($activePage);
     
-    $user = array(
-        'email' => 'singharatbunphim@gmail.com',
-        'gender' => 'm',
-        'birthday' => '2001-01-20',
-        'fname' => 'Singharat',
-        'lname' => 'Bunphim',
-        'avatar_url' => 'This is a url picture'
-    );    
-    print_r($user);
+
 
 
     if(isset($_GET['email']) && isset($_GET['gender']) && isset($_GET['birthday']) && isset($_GET['fname']) && isset($_GET['lname']) && isset($_GET['avatar_url'])){
-        echo "POST";
+        echo "<br />";
+        echo "User Post Data -> ";
         print_r($_GET);
+        $user = array(
+            'email' => 'singharatbunphim@gmail.com',
+            'gender' => 'm',
+            'birthday' => '2001-01-20',
+            'fname' => 'Singharat',
+            'lname' => 'Bunphim',
+            'avatar_url' => 'This is a url picture'
+        );
+        print_r($user);  
+          
     }else{
-        echo "NO POST!";
+        echo "USER No Post Data!";
     }
 
 ?>
@@ -132,7 +135,7 @@
                                 <div class="text-md">Email</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
-                            <input type="email" name="email" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                            <input type="email" required name="email" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
                         </div>
                     </div>
 
@@ -142,7 +145,7 @@
                                 <div class="text-md">FirstName</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
-                            <input type="text" name="fname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                            <input type="text" required name="fname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
                         </div>
                     </div>
 
@@ -152,7 +155,7 @@
                                 <div class="text-md">LastName</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
-                            <input type="text" name="lname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                            <input type="text" required name="lname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
                         </div>
                     </div>
 
@@ -163,7 +166,7 @@
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <div class="grid gird-cols-3">
-                                <select class="outline-none shadow-md px-2 rounded-md" name="gender" value="m">
+                                <select required class="outline-none shadow-md px-2 rounded-md" name="gender" value="m">
                                     <option value="m">Male</option>
                                     <option value="f">Female</option>
                                     <option value="o">Others</option>
@@ -179,7 +182,7 @@
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <div class="grid gird-cols-3">
-                                <input type="date" name="birthday" class="outline-none shadow-md px-2 rounded-md" />
+                                <input required type="date" name="birthday" class="outline-none shadow-md px-2 rounded-md" />
                             </div>
                         </div>
                     </div>
@@ -190,7 +193,7 @@
                                 <div class="text-md">Avatar URL</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
-                            <input type="text" name="avatar_url" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                            <input type="text" required name="avatar_url" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
                         </div>
                     </div>
 
