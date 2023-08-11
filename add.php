@@ -8,9 +8,27 @@
     include_once('./components/navbar.php');
     
     $user_srv = new UseUserService($condb);
-    $user_all = $user_srv->getAllUser();
     $activePage = 1;
     $navbar = new Navbar($activePage);
+    
+    $user = array(
+        'email' => 'singharatbunphim@gmail.com',
+        'gender' => 'm',
+        'birthday' => '2001-01-20',
+        'fname' => 'Singharat',
+        'lname' => 'Bunphim',
+        'avatar_url' => 'This is a url picture'
+    );    
+    print_r($user);
+
+
+    if(isset($_GET['email']) && isset($_GET['gender']) && isset($_GET['birthday']) && isset($_GET['fname']) && isset($_GET['lname']) && isset($_GET['avatar_url'])){
+        echo "POST";
+        print_r($_GET);
+    }else{
+        echo "NO POST!";
+    }
+
 ?>
 
 <!doctype html>
@@ -94,7 +112,7 @@
                 <div class="group px-5  flex flex-row items-center inline-block  gap-2 w-[34rem] transition-all duration-300 rounded-2xl py-2 focus-within:rounded-3xl px-1 focus-within:border-sky-500 focus-within:ring-sky-500  focus-within:shadow-2xl">
                     <div class="focus:outline-none  py-5  rounded-2xl transition-all duration-300   w-full h-full border-none outline-none" ></div>
                     <div class="w-[3rem] py-3 rounded-md flex items-center justify-center text-black  h-full">
-    
+
                     </div>
                 </div>
         </div>
@@ -103,6 +121,91 @@
             <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> 
                 <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">Add Members</span>
              </div>
+
+             <form action="./add.php" class="from_insert_table]  w-full h-full flex flex-row justify-center py-4">
+                <div class="group  max-w-[45rem] min-w-[45rem] flex flex-col gap-y-6">
+                    <div class="text-2xl font-bold mb-4">Do you want to insert member ?</div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md">Email</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="email" name="email" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md">FirstName</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" name="fname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md">LastName</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" name="lname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md">Gender</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <div class="grid gird-cols-3">
+                                <select class="outline-none shadow-md px-2 rounded-md" name="gender" value="m">
+                                    <option value="m">Male</option>
+                                    <option value="f">Female</option>
+                                    <option value="o">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md">Birthday</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <div class="grid gird-cols-3">
+                                <input type="date" name="birthday" class="outline-none shadow-md px-2 rounded-md" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md">Avatar URL</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" name="avatar_url" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="py-2 flex flex-row justify-end">
+                        <button type="submit" class="bg-lime-600 text-white py-2 px-6 hover:opacity-50 transition-all duration-300 rounded-md">Submit</button>
+                    </div>
+
+                </div>
+    
+
+             </form>
+
+
+
+
         </div>
 
 
