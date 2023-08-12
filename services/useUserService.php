@@ -9,24 +9,41 @@ class UseUserService {
 
 
     public function insertUserToDatabase($user){
-        $sql = "INSERT INTO members (m_email, m_gender, m_birthday, m_fname, m_lname, m_avatar_url) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO members (m_email, m_gender, m_birthday, m_fname, m_lname, m_avatar_url,m_phone) VALUES (?,?,?,?,?,?,?)";
         $stmt = $this->db->prepare($sql);
-        $response = "";
+        $status = false;
+
+        // Bind parameters with appropriate data types
         
-        if ($stmt) {
-            $stmt->bind_param("ssssss", $user['email'], $user['gender'], $user['birthday'], $user['fname'], $user['lname'], $user['avatar_url']);
+        $stmt->bind_param("sssssss", $user['email'], $user['gender'], $user['birthday'], $user['fname'], $user['lname'], $user['avatar_url'],$user['phone']);
+
+        // Execute the statement
+
+        try {
+            // Execute the statement
             if ($stmt->execute()) {
-                $response = "ok pass"; // Insertion successful
+                if ($stmt->affected_rows === 1) {
+                    $response = "User data inserted successfully.";
+                    $status = true;
+                } else {
+                    $response = "No rows affected.";
+                }
             } else {
-                $response = "Something went wrong"; // Execution failed
+                $response = "Execution failed.";
             }
-            $stmt->close();
-        } else {
-            $response = "Something went wrong"; // Statement preparation failed
+        } catch (Exception $e) {
+            // Handle the exception
+            $response = "Exception: " . $e->getMessage();
+            
         }
         
-        echo $response;
+        // Close the statement
+        $stmt->close();
         
+        return array(
+            'status' => $status,
+            'message' => $response
+        );
     }
 
     public function getAllUser() {

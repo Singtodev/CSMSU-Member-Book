@@ -6,31 +6,16 @@
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
     include_once('./components/navbar.php');
+    include_once('./services/useSweetAlert.php');
     
     $user_srv = new UseUserService($condb);
+    $sweet_srv = new UseSweetAlert();
     $activePage = 1;
     $navbar = new Navbar($activePage);
     
 
 
 
-    if(isset($_GET['email']) && isset($_GET['gender']) && isset($_GET['birthday']) && isset($_GET['fname']) && isset($_GET['lname']) && isset($_GET['avatar_url'])){
-        echo "<br />";
-        echo "User Post Data -> ";
-        print_r($_GET);
-        $user = array(
-            'email' => 'singharatbunphim@gmail.com',
-            'gender' => 'm',
-            'birthday' => '2001-01-20',
-            'fname' => 'Singharat',
-            'lname' => 'Bunphim',
-            'avatar_url' => 'This is a url picture'
-        );
-        print_r($user);  
-          
-    }else{
-        echo "USER No Post Data!";
-    }
 
 ?>
 
@@ -43,6 +28,7 @@
   <link rel="stylesheet" href="./styles/global.css">
   <title>Member Book</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-gray-200">
@@ -190,6 +176,16 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md">Phone</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" required name="phone" minLength="0" maxLength="10" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
                                 <div class="text-md">Avatar URL</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
@@ -229,6 +225,51 @@
 <div class="w-full absolute bg-gradient-to-r from-cyan-500 to-blue-500 h-[45rem]" style="clip-path: polygon(0 0, 100% 0, 100% 73%, 0% 100%);"></div>
 
 </div>
+
+<?php
+
+if(isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && isset($_GET['birthday']) && isset($_GET['fname']) && isset($_GET['lname']) && isset($_GET['avatar_url'])){
+    $user = array(
+        'email' => $_GET['email'],
+        'gender' => $_GET['gender'],
+        'birthday' => $_GET['birthday'],
+        'fname' => $_GET['fname'],
+        'lname' => $_GET['lname'],
+        'avatar_url' => $_GET['avatar_url'],
+        'phone' => $_GET['phone']
+    );
+    $result = $user_srv->insertUserToDatabase($user);
+    if($result){
+        if($result['status'] == true){
+            $sweet_srv->showPopUpSuccess("Insert Member Success");
+            echo '<script>';
+            echo 'setTimeout(function() {
+                window.location.href = "index.php";
+            }, 3000)'; // 3000 milliseconds = 3 seconds
+            echo '</script>';
+            die();
+        }else{
+            $sweet_srv->showPopUpFailed("Insert Member Failed");
+            echo '<script>';
+            echo 'setTimeout(function() {
+                window.location.href = "add.php";
+            }, 3000)'; // 3000 milliseconds = 3 seconds
+            echo '</script>';
+            die();
+        }
+    
+    }
+    
+
+
+
+    //set default store data
+
+    
+      
+}
+
+?>
 
 </body>
 </html>

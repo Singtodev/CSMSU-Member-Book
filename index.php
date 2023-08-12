@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    
+
     include("./utils/condb.php");
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="./styles/global.css">
   <title>Member Book</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-gray-200">
@@ -99,19 +101,19 @@
         </div>
 
         <div class="container min-w-[500px] min-h-[650px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
-            <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">List of Members( <?php echo $user_all->num_rows ?> )</span> </div>
+            <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">List of Members (  <?php echo $user_all->num_rows ?>  )</span> </div>
             
-            <div class="w-full  transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid grid-cols-8">
+            <!-- <div class="w-full  transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid grid-cols-9">
                     <div class="flex items-center px-4 xl:px-10 ">
                         Avatar
                     </div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> Number</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> Full Name</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap flex justify-center"> Age</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> Birth Day</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap col-span-2"> Email</div>
-                    <div class="flex items-center tracking-wide lg:text-md whitespace-nowrap"> </div>
-            </div>
+                    <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap"> Number</div>
+                    <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap"> Full Name</div>
+                    <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap"> Phone</div>
+                    <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap flex justify-center"> Age</div>
+                    <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap"> Birth Day</div>
+                    <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap col-span-2"> Email</div>
+            </div> -->
             <div id="search-results" class="w-full bg-white  h-[650px]  p-4 overflow-y-scroll overflow-x-hidden py-4" >
 
                     <?php
@@ -127,7 +129,8 @@
                                     $row['m_fname'], 
                                     $row['m_lname'], 
                                     $row['m_age'],
-                                    $row['m_avatar_url']
+                                    $row['m_avatar_url'],
+                                    $row['m_phone']
                                 );
                                 echo $personCard->buildCard();
                             }
