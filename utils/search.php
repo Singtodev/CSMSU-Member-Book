@@ -23,6 +23,8 @@ if (isset($_GET['search'])) {
             );
             echo $personCard->buildCard();
         }
+    }else{
+        echo "<div class='w-full h-full flex justify-center items-center absolute text-gray-400 text-3xl'>Empty Users</div>";
     }
     
 }

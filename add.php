@@ -13,7 +13,8 @@
     $activePage = 1;
     $navbar = new Navbar($activePage);
     
-
+    $currentDate = new DateTime();
+    $fiveYearsAgo = $currentDate->sub(new DateInterval('P1Y'));
 
 
 
@@ -165,10 +166,10 @@
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
                                 <div class="text-md">Birthday</div>
-                                <div class="text-[8px] text-red-300">* Required</div>
+                                <div class="text-[8px] text-red-300">* Required #note current - 1 Years </div>
                             </div>
                             <div class="grid gird-cols-3">
-                                <input required type="date" name="birthday" class="outline-none shadow-md px-2 rounded-md" />
+                                <input required type="date" max="<?php echo $fiveYearsAgo->format('Y-m-d')?>" name="birthday" class="outline-none shadow-md px-2 rounded-md" />
                             </div>
                         </div>
                     </div>

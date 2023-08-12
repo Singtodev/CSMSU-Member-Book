@@ -11,6 +11,9 @@
     $user_all = $user_srv->getAllUser();
     $activePage = 0;
     $navbar = new Navbar($activePage);
+
+
+    
 ?>
 
 <!doctype html>
@@ -90,14 +93,18 @@
         <div class="w-[70%]">
 
         <div class="container flex items-center justify-start mt-4 mb-2 py-2">
-                <div class="group px-5  flex flex-row items-center bg-white inline-block  gap-2 w-[34rem] transition-all duration-300 rounded-2xl py-2 focus-within:rounded-3xl px-1 focus-within:border-sky-500 focus-within:ring-sky-500  focus-within:shadow-2xl">
-                    <input id="search-input" type="text" 
-                    placeholder="What do you mind ?"
-                    class="focus:outline-none  py-2  rounded-2xl transition-all duration-300   w-full h-full border-none outline-none" >
-                    <div class="w-[3rem] py-3 rounded-md flex items-center justify-center text-black  h-full">
-                        <i class="fa-solid fa-magnifying-glass text-black"></i>
+                <form action="./search.php" method="post">
+                    <div class="group px-5  flex flex-row items-center bg-white inline-block  gap-2 w-[34rem] transition-all duration-300 rounded-2xl py-2 focus-within:rounded-3xl px-1 focus-within:border-sky-500 focus-within:ring-sky-500  focus-within:shadow-2xl">
+                        <input id="search-input" name="search_input" type="text" 
+                        placeholder="What do you mind ?"
+                        class="focus:outline-none  py-2  rounded-2xl transition-all duration-300   w-full h-full border-none outline-none" >
+                        <div class="w-[3rem] py-3 rounded-md flex items-center justify-center text-black  h-full">
+                           <button type="submit" class="w-full h-full block">
+                            <i class="fa-solid fa-magnifying-glass text-black cursor-pointer"></i>
+                           </button>
+                        </div>
                     </div>
-                </div>
+                </form>
         </div>
 
         <div class="container min-w-[500px] min-h-[650px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
@@ -114,7 +121,7 @@
                     <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap"> Birth Day</div>
                     <div class="flex justify-center items-center tracking-wide lg:text-md whitespace-nowrap col-span-2"> Email</div>
             </div> -->
-            <div id="search-results" class="w-full bg-white  h-[650px]  p-4 overflow-y-scroll overflow-x-hidden py-4" >
+            <div id="search-results" class="w-full bg-white  h-[650px]  p-4 overflow-y-scroll overflow-x-hidden py-4 relative" >
 
                     <?php
 
@@ -135,6 +142,8 @@
                                 echo $personCard->buildCard();
                             }
 
+                        }else{
+                            echo "<div class='w-full h-full flex justify-center items-center absolute text-gray-400 text-3xl'>Empty Users</div>";
                         }
 
                     ?>

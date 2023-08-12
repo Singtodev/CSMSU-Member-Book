@@ -3,9 +3,9 @@
 class Navbar {
 
     private $activeIndex;
-    private $listMenu = ["homepage","add member", "search member", "Contacts us"];
-    private $listIcon = ["fa-solid fa-house", "fa-solid fa-user-plus", "fa-solid fa-magnifying-glass", "fa-solid fa-id-card-clip"];
-    private $Paths = ['./index.php','./add.php','./search.php','./contact_us.php'];
+    private $listMenu = ["homepage","add member",  "Contacts us"];
+    private $listIcon = ["fa-solid fa-house", "fa-solid fa-user-plus", "fa-solid fa-id-card-clip"];
+    private $Paths = ['./index.php','./add.php','./contact_us.php'];
     
     public function __construct($activeIndex = 0){
         $this->activeIndex = $activeIndex;

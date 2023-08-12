@@ -37,7 +37,7 @@ class CardPeople {
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.$this->number.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.((strlen($this->firstName) + strlen($this->lastName)) >= 15 ? substr($more_name ,0 , 15)."..." : $more_name) .'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->phone.'</div>';
-        $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->age.'</div>';
+        $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->age." ปี".'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.$this->birth_day.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap col-span-2">'.$this->email.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap items-center">'.($this->gender == 'm' ? '<i class="fa-solid fa-person text-3xl text-cyan-400"></i>' : ($this->gender == 'f' ? '<i class="fa-solid fa-person text-3xl text-pink-400"></i>' : '<i class="fa-solid fa-person text-3xl text-gray-400"></i>')).'</div>';

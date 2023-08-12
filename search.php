@@ -9,8 +9,17 @@
     
     $user_srv = new UseUserService($condb);
     $user_all = $user_srv->getAllUser();
-    $activePage = 2;
+    $activePage = 3;
     $navbar = new Navbar($activePage);
+
+    $search_val = $_POST['search_input'];
+
+    if(isset($search_val)){
+        $result = $user_srv->getAllUserBySearch($_POST['search_input']);
+    }
+
+
+
 ?>
 
 <!doctype html>
@@ -22,6 +31,7 @@
   <link rel="stylesheet" href="./styles/global.css">
   <title>Member Book</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-gray-200">
@@ -98,16 +108,42 @@
                 </div>
         </div>
 
-        <div class="container min-w-[500px] min-h-[800px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
+        <div class="container min-w-[500px] min-h-[800px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl relative">
             <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> 
-                <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">Search Members</span>
+                <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">Search " <?php echo$search_val ?> "</span>
              </div>
+             <?php
+
+
+            if($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    $personCard = new CardPeople(
+                        $row['m_id'],
+                        $row['m_email'],
+                        $row['m_gender'] , 
+                        $row['m_birthday'],
+                        $row['m_fname'], 
+                        $row['m_lname'], 
+                        $row['m_age'],
+                        $row['m_avatar_url'],
+                        $row['m_phone']
+                    );
+                    echo $personCard->buildCard();
+                }
+            }else{
+                echo "<div class='w-full h-full flex justify-center items-center absolute text-gray-400 text-3xl'>Empty Users</div>";
+            }
+
+        ?>
+
         </div>
 
+        
+
 
 
         </div>
-
+        
 
 
 
