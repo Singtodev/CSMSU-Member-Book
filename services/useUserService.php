@@ -52,6 +52,16 @@ class UseUserService {
         return $result;
     }
 
+
+    public function getUserById($id){
+        $sql = "SELECT *, YEAR(CURDATE()) - YEAR(m_birthday) - (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(m_birthday, '%m%d')) AS m_age FROM members WHERE m_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result;
+    }
+
     public function getAllUserBySearch($search_word){
         $search_word = '%' . $search_word . '%';
 

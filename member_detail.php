@@ -1,16 +1,18 @@
 <?php
-
     session_start();
-    
     include("./utils/condb.php");
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
     include_once('./components/navbar.php');
-
-    $activePage = 2;
+    include_once('./services/useSweetAlert.php');
+    $activePage = 0;
     $navbar = new Navbar($activePage);
-?>
+    $sweet_srv = new UseSweetAlert();
+    $user_srv = new UseUserService($condb);
 
+
+
+?>
 <!doctype html>
 <html>
 <head>
@@ -20,11 +22,39 @@
   <link rel="stylesheet" href="./styles/global.css">
   <title>Member Book</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-gray-200">
 
+<?php
 
+    if(isset($_GET['id'])) {
+        // Get the value of 'id' parameter
+        $memberId = $_GET['id'];
+
+        $user = $user_srv->getUserById($memberId);
+
+        if($user->num_rows > 0){
+            //echo 'Fetching data successfully.';
+        }else{
+            echo '';
+            $msg = 'User is not found';
+            $sweet_srv->showPopUpFailed($msg);
+            echo '<script>';
+            echo 'setTimeout(function() {
+                window.location.href = "index.php";
+            }, 3000)'; // 3000 milliseconds = 3 seconds
+            echo '</script>';
+            die();
+        }
+
+    } else {
+        echo "No member ID provided.";
+    }
+
+
+?>
 
 
 
@@ -103,62 +133,57 @@
 
              <div class="relative w-full h-full flex justify-center items-center flex flex-col ">
                 <div class="font-bold max-w-[45rem] min-w-[45rem] py-2   my-2 text-2xl flex items-center justify-center uppercase">
-                        Contact US
+                        Our Profile
                 </div>
-
-                <div class="flex flex-row justify-center items-center w-full mt-6">
-                    <div class="grid grid-cols-3 gap-6 w-full p-10">
-                        <a href="https://www.facebook.com/singharatbunphim/" target="_blank">
-                            <div class="bg-white shadow-md p-2 min-h-[14rem] rounded-md hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center">
-        
-                                        <div class="flex flex-row gap-2 items-center">
-                                            <i class="fa-brands fa-facebook text-5xl text-blue-500"></i>
-                                            <div class="label mx-2 text-xl">Facebook</div>
-                                        </div>
-            
+                
+                <?php
+                
+                    if($row = $user->fetch_assoc()){ ?>
+                        <div class="max-w-[45rem] min-w-[45rem] py-2 flex items-center justify-center ">
+                            <div class="avatar w-[15rem] h-[15rem] bg-cover object-cover position-center rounded-2xl bg-slate-300 rounded md text-black bg-[url('<?php echo $row['m_avatar_url'] ?>')] ">
+               
                             </div>
-                        </a>
-                        <a href="https://www.instagram.com/singh_singharat/" target="_blank">
-                        <div class="bg-white shadow-md p-2 min-h-[14rem] rounded-md hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center">
-                                <div class="flex flex-row gap-2 items-center">
-                                    <i class="fa-brands fa-instagram text-5xl text-pink-500"></i>
-                                    <div class="label mx-2 text-xl">IG</div>
-                                </div>
                         </div>
-                        </a>
-                        <a href="https://www.twitter.com/singhto998/" target="_blank">
-                        <div class="bg-white shadow-md p-2 min-h-[14rem] rounded-md hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center">
-                                <div class="flex flex-row gap-2 items-center">
-                                    <i class="fa-brands fa-twitter text-5xl text-blue-500"></i>
-                                    <div class="label mx-2 text-xl">Twitter</div>
-                                </div>
-                        </div>
-                        </a>
-                        <a href="https://www.github.com/unkeloc4/" target="_blank">
-                        <div class="bg-white shadow-md p-2 min-h-[14rem] rounded-md hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center">
-                                <div class="flex flex-row gap-2 items-center">
-                                    <i class="fa-brands fa-github text-5xl text-black"></i>
-                                    <div class="label mx-2 text-xl">Github</div>
-                                </div>
-                        </div>
-                        </a>
-                        <a href="https://www.tiktok.com/unkeloc4/" target="_blank">
-                        <div class="bg-white shadow-md p-2 min-h-[14rem] rounded-md hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center">
-                                <div class="flex flex-row gap-2 items-center">
-                                    <i class="fa-brands fa-tiktok text-5xl text-black"></i>
-                                    <div class="label mx-2 text-xl">TikTok</div>
-                                </div>
-                        </div>
-                        </a>
-                    </div>
-                </div>
 
-                <div class="my-3">
-                    I would like to hear from you.
-                </div>
-                <div class="my-3">
-                    <i class="fa-regular fa-envelope"></i> Email: singharatbunphim@gmail.com
-                </div>
+                        <div class="flex flex-col">
+                            <div class="group flex flex-row gap-2 my-4">
+                                <div class="font-bold bg-slate-300 px-4 rounded-md">Email</div>
+                                <div class=""><?php echo $row['m_email'] ?></div>
+                            </div>
+                            <div class="group flex flex-row gap-2 my-4">
+                                <div class="font-bold bg-slate-300 px-4 rounded-md">Full Name</div>
+                                <div class=""><?php echo $row['m_fname'] ?> <?php echo $row['m_lname'] ?></div>
+                            </div>
+                            <div class="group flex flex-row gap-2 my-4">
+                                <div class="font-bold bg-slate-300 px-4 rounded-md">Gender</div>
+                                <div class=""><?php echo $row['m_gender'] ?></div>
+                            </div>
+                            <div class="group flex flex-row gap-2 my-4">
+                                <div class="font-bold bg-slate-300 px-4 rounded-md">Age</div>
+                                <div class=""><?php echo $row['m_age'] ?> ปี </div>
+                            </div>
+                            <div class="group flex flex-row gap-2 my-4">
+                                <div class="font-bold bg-slate-300 px-4 rounded-md">Birthday</div>
+                                <div class=""><?php echo $row['m_birthday'] ?></div>
+                            </div>
+
+                            <div class="group flex flex-row gap-2 my-4">
+                                <div class="font-bold bg-slate-300 px-4 rounded-md">Phone</div>
+                                <div class=""><?php echo $row['m_phone'] ?></div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="flex flex-row mt-5 gap-2">
+                                <div class="bg-blue-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300">Update</div>
+                                <div class="bg-red-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300">Delete</div>
+                        </div>      
+
+
+                    <?php } ?>
+                
+                    
 
              </div>
         </div>

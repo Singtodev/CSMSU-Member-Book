@@ -114,12 +114,12 @@
 
              <form action="./add.php" class="from_insert_table]  w-full h-full flex flex-row justify-center py-4">
                 <div class="group  max-w-[45rem] min-w-[45rem] flex flex-col gap-y-6">
-                    <div class="text-2xl font-bold mb-4">Do you want to insert member ?</div>
+                    <div class="text-2xl font-bold mb-4 text-center">Do you want to insert member ?</div>
 
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
-                                <div class="text-md">Email</div>
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Email</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <input type="email" required name="email" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
@@ -129,7 +129,7 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
-                                <div class="text-md">FirstName</div>
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">FirstName</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <input type="text" required name="fname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
@@ -139,7 +139,7 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
-                                <div class="text-md">LastName</div>
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">LastName</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <input type="text" required name="lname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
@@ -149,7 +149,7 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
-                                <div class="text-md">Gender</div>
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Gender</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <div class="grid gird-cols-3">
@@ -165,7 +165,7 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
-                                <div class="text-md">Birthday</div>
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Birthday</div>
                                 <div class="text-[8px] text-red-300">* Required #note current - 1 Years </div>
                             </div>
                             <div class="grid gird-cols-3">
@@ -177,7 +177,7 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
-                                <div class="text-md">Phone</div>
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Phone</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <input type="text" required name="phone" minLength="0" maxLength="10" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
@@ -187,7 +187,7 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
-                                <div class="text-md">Avatar URL</div>
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Avatar URL</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
                             <input type="text" required name="avatar_url" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
@@ -250,7 +250,11 @@ if(isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && i
             echo '</script>';
             die();
         }else{
-            $sweet_srv->showPopUpFailed("Insert Member Failed");
+
+            $msg = 'Insert Member Failed ';
+            $msg .= $result['message'];
+
+            $sweet_srv->showPopUpFailed($msg);
             echo '<script>';
             echo 'setTimeout(function() {
                 window.location.href = "add.php";
