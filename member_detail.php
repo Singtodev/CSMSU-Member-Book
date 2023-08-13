@@ -126,7 +126,7 @@
                 </div>
         </div>
 
-        <div class="container min-w-[500px] min-h-[800px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
+        <div class="container min-w-[500px] h-auto my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
             <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> 
                 <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">Contacts Members</span>
              </div>
@@ -140,34 +140,36 @@
                 
                     if($row = $user->fetch_assoc()){ ?>
                         <div class="max-w-[45rem] min-w-[45rem] py-2 flex items-center justify-center ">
-                            <div class="avatar w-[15rem] h-[15rem] bg-cover object-cover position-center rounded-2xl bg-slate-300 rounded md text-black bg-[url('<?php echo $row['m_avatar_url'] ?>')] ">
+                            <div class="avatar w-[15rem] h-[15rem] bg-cover object-cover bg-center rounded-2xl bg-slate-300 rounded md text-black bg-[url('<?php echo $row['m_avatar_url'] ?>')] ">
                
                             </div>
                         </div>
 
-                        <div class="flex flex-col">
-                            <div class="group flex flex-row gap-2 my-4">
+                        <div class="flex flex-col min-w-[45rem] max-w-[45rem] my-5">
+                            <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class="font-bold bg-slate-300 px-4 rounded-md">Email</div>
                                 <div class=""><?php echo $row['m_email'] ?></div>
                             </div>
-                            <div class="group flex flex-row gap-2 my-4">
+                            <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class="font-bold bg-slate-300 px-4 rounded-md">Full Name</div>
                                 <div class=""><?php echo $row['m_fname'] ?> <?php echo $row['m_lname'] ?></div>
                             </div>
-                            <div class="group flex flex-row gap-2 my-4">
+                            <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class="font-bold bg-slate-300 px-4 rounded-md">Gender</div>
-                                <div class=""><?php echo $row['m_gender'] ?></div>
+                                <div class="">
+                                <?php echo $row['m_gender'] == 'm' ? '<i class="fa-solid fa-person text-3xl text-cyan-400"></i>' : ($row['m_gender'] == 'f' ? '<i class="fa-solid fa-person text-3xl text-pink-400"></i>' : '<i class="fa-solid fa-person text-3xl text-gray-400"></i>') ?>
+                                </div>
                             </div>
-                            <div class="group flex flex-row gap-2 my-4">
+                            <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class="font-bold bg-slate-300 px-4 rounded-md">Age</div>
                                 <div class=""><?php echo $row['m_age'] ?> ปี </div>
                             </div>
-                            <div class="group flex flex-row gap-2 my-4">
+                            <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class="font-bold bg-slate-300 px-4 rounded-md">Birthday</div>
                                 <div class=""><?php echo $row['m_birthday'] ?></div>
                             </div>
 
-                            <div class="group flex flex-row gap-2 my-4">
+                            <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class="font-bold bg-slate-300 px-4 rounded-md">Phone</div>
                                 <div class=""><?php echo $row['m_phone'] ?></div>
                             </div>
@@ -175,7 +177,7 @@
 
                         </div>
 
-                        <div class="flex flex-row mt-5 gap-2">
+                        <div class="flex flex-row mt-4 gap-2 mb-5">
                                 <div class="bg-blue-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300">Update</div>
                                 <div class="bg-red-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300">Delete</div>
                         </div>      
