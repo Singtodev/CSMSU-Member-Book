@@ -6,7 +6,7 @@
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
     include_once('./components/navbar.php');
-    include_once('./services/useSweetAlert.php');
+    include_once('./services/useSweetAlertService.php');
     
     $user_srv = new UseUserService($condb);
     $sweet_srv = new UseSweetAlert();

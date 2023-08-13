@@ -10,12 +10,7 @@
     $navbar = new Navbar($activePage);
     $sweet_srv = new UseSweetAlert();
     $user_srv = new UseUserService($condb);
-
-
-    $query = http_build_query(array(
-        'id'      => 10,
-    ));
-
+    
 ?>
 <!doctype html>
 <html>
@@ -140,12 +135,12 @@
 
              <div class="relative w-full h-full flex justify-center items-center flex flex-col ">
                 <div class="font-bold max-w-[45rem] min-w-[45rem] py-2   my-2 text-2xl flex items-center justify-center uppercase">
-                        Our Profile
                 </div>
                 
                 <?php
                 
-                    if($row = $user->fetch_assoc()){ ?>
+                    if($row = $user->fetch_assoc()){ 
+                        ?>
                         <div class="max-w-[45rem] min-w-[45rem] py-2 flex items-center justify-center ">
                             <div class="avatar w-[15rem] h-[15rem] bg-cover object-cover bg-center rounded-2xl bg-slate-300 rounded md text-black bg-[url('<?php echo $row['m_avatar_url'] ?>')] ">
                
@@ -186,14 +181,12 @@
 
                         <div class="flex flex-row mt-4 gap-2 mb-5">
 
-                                <a href="./member_edit.php">
-                                    <div class="bg-blue-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
-                                        
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                        Update
-                                    </div>
-                                </a>
-
+                            <a href="./member_edit.php?">
+                                <div class="bg-blue-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                    Update
+                                </div>
+                            </a>
                                 <div class="bg-red-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
                                 <i class="fa-solid fa-trash"></i>    
                                     Delete
