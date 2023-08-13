@@ -1,6 +1,7 @@
 <?php
     session_start();
     include("./utils/condb.php");
+    include("./utils/datethai.php");
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
     include_once('./components/navbar.php');
@@ -169,7 +170,7 @@
                             </div>
                             <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class="font-bold bg-slate-300 px-4 rounded-md">Birthday</div>
-                                <div class=""><?php echo $row['m_birthday'] ?></div>
+                                <div class=""><?php echo getThaiDate($row['m_birthday']) ?></div>
                             </div>
 
                             <div class="group flex flex-row gap-2 my-4 items-center">

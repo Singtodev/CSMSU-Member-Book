@@ -25,6 +25,20 @@ class CardPeople {
     }
 
 
+    public function getThaiDate($today){
+        $strYear=       date("Y",strtotime($strDate))+543;
+        $strMonth=      date("n",strtotime($strDate));
+        $strDay=        date("j",strtotime($strDate));
+        $strHour=       date("H",strtotime($strDate));
+        $strMinute=     date("i",strtotime($strDate));
+        $strSeconds=    date("s",strtotime($strDate));
+        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthThai=$strMonthCut[$strMonth]; 
+        $strYearCut = substr($strYear,0,4); //เอา2ตัวท้ายของปี .พ.ศ.
+        return "$strDay $strMonthThai $strYearCut";
+    }
+
+
    
     public function buildCard() {
 
@@ -44,7 +58,7 @@ class CardPeople {
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.((strlen($this->firstName) + strlen($this->lastName)) >= 15 ? substr($more_name ,0 , 15)."..." : $more_name) .'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->phone.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->age." ปี".'</div>';
-        $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.$this->birth_day.'</div>';
+        $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.$this->getThaiDate($this->birth_day).'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap col-span-2">'.$this->email.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap items-center">'.($this->gender == 'm' ? '<i class="fa-solid fa-person text-3xl text-cyan-400"></i>' : ($this->gender == 'f' ? '<i class="fa-solid fa-person text-3xl text-pink-400"></i>' : '<i class="fa-solid fa-person text-3xl text-gray-400"></i>')).'</div>';
         $html .= '</div>';
