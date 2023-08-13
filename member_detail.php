@@ -12,9 +12,9 @@
     $user_srv = new UseUserService($condb);
 
 
-    $query = http_build_query(array(
-        'id'      => 10,
-    ));
+    // destroy session;
+
+
 
 ?>
 <!doctype html>
@@ -145,7 +145,15 @@
                 
                 <?php
                 
-                    if($row = $user->fetch_assoc()){ ?>
+                    if($row = $user->fetch_assoc()){
+                        
+                        $query = http_build_query(array(
+                            'id'      => $row['m_id'],
+                        ));
+
+                        $_SESSION['edit_member_id'] = $row['m_id'];
+                        
+                        ?>
                         <div class="max-w-[45rem] min-w-[45rem] py-2 flex items-center justify-center ">
                             <div class="avatar w-[15rem] h-[15rem] bg-cover object-cover bg-center rounded-2xl bg-slate-300 rounded md text-black bg-[url('<?php echo $row['m_avatar_url'] ?>')] ">
                
@@ -160,6 +168,10 @@
                             <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class=" bg-slate-300 px-4 rounded-md">Full Name</div>
                                 <div class=""><?php echo $row['m_fname'] ?> <?php echo $row['m_lname'] ?></div>
+                            </div>
+                            <div class="group flex flex-row gap-2 my-4 items-center">
+                                <div class=" bg-slate-300 px-4 rounded-md">Display</div>
+                                <div class=""><?php echo $row['m_display_name'] ?></div>
                             </div>
                             <div class="group flex flex-row gap-2 my-4 items-center">
                                 <div class=" bg-slate-300 px-4 rounded-md">Gender</div>
@@ -186,25 +198,47 @@
 
                         <div class="flex flex-row mt-4 gap-2 mb-5">
 
-                                <a href="./member_edit.php">
+                                <a href="./member_edit.php?<?php echo $query ?>">
                                     <div class="bg-blue-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
                                         
                                     <i class="fa-solid fa-pen-to-square"></i>
                                         Update
                                     </div>
                                 </a>
-
-                                <div class="bg-red-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
-                                <i class="fa-solid fa-trash"></i>    
-                                    Delete
-                                </div>
+                                    <div id="btn-delete" class="bg-red-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
+                                    <i class="fa-solid fa-trash"></i>    
+                                        Delete
+                                    </div>
                         </div>      
 
 
                     <?php } ?>
                 
                     
+                    <script>
 
+                        $(document).ready(function() {
+                            $('#btn-delete').on('click', function() {
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "You won't be able to revert this!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, delete it!'
+                                        }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            
+                                            setTimeout(function() {
+                                                window.location.href = "member_delete.php";
+                                            }, 1000)// 3000 milliseconds = 3 seconds
+     
+                                        }
+                                    })
+                            });
+                        });
+                        </script>
              </div>
         </div>
 

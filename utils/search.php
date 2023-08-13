@@ -19,7 +19,8 @@ if (isset($_GET['search'])) {
                 $row['m_lname'], 
                 $row['m_age'],
                 $row['m_avatar_url'],
-                $row['m_phone']
+                $row['m_phone'],
+                $row['m_display_name']
             );
             echo $personCard->buildCard();
         }

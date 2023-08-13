@@ -1,16 +1,14 @@
 <?php
 
-    function getThaiDate($today){
-        $strYear=       date("Y",strtotime($strDate))+543;
-        $strMonth=      date("n",strtotime($strDate));
-        $strDay=        date("j",strtotime($strDate));
-        $strHour=       date("H",strtotime($strDate));
-        $strMinute=     date("i",strtotime($strDate));
-        $strSeconds=    date("s",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-        $strMonthThai=$strMonthCut[$strMonth]; 
-        $strYearCut = substr($strYear,0,4);
-        return "$strDay $strMonthThai $strYearCut";
+    function getThaiDate($date){
+        $newDate = new DateTime($date);
+        $mday = $newDate->format("j");  // Use "j" to get day without leading zeros
+        $mon = $newDate->format("n");
+        $year = $newDate->format("Y");
+        $year = $year + 543;
+        $thmonth = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+        $mon = $thmonth[$mon];
+        return "$mday $mon $year";
     }
 
 

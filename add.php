@@ -151,6 +151,17 @@
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
                             <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">DisplayName</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" required name="display_name" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
                                 <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Gender</div>
                                 <div class="text-[8px] text-red-300">* Required</div>
                             </div>
@@ -231,7 +242,7 @@
 
 <?php
 
-if(isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && isset($_GET['birthday']) && isset($_GET['fname']) && isset($_GET['lname']) && isset($_GET['avatar_url'])){
+if(isset($_GET['display_name']) && isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && isset($_GET['birthday']) && isset($_GET['fname']) && isset($_GET['lname']) && isset($_GET['avatar_url'])){
     $user = array(
         'email' => $_GET['email'],
         'gender' => $_GET['gender'],
@@ -239,7 +250,8 @@ if(isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && i
         'fname' => $_GET['fname'],
         'lname' => $_GET['lname'],
         'avatar_url' => $_GET['avatar_url'],
-        'phone' => $_GET['phone']
+        'phone' => $_GET['phone'],
+        'display_name' => $_GET['display_name']
     );
     $result = $user_srv->insertUserToDatabase($user);
     if($result){
@@ -248,7 +260,7 @@ if(isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && i
             echo '<script>';
             echo 'setTimeout(function() {
                 window.location.href = "index.php";
-            }, 3000)'; // 3000 milliseconds = 3 seconds
+            }, 1000)'; // 3000 milliseconds = 3 seconds
             echo '</script>';
             die();
         }else{
@@ -260,19 +272,13 @@ if(isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && i
             echo '<script>';
             echo 'setTimeout(function() {
                 window.location.href = "add.php";
-            }, 3000)'; // 3000 milliseconds = 3 seconds
+            }, 1000)'; // 3000 milliseconds = 3 seconds
             echo '</script>';
             die();
         }
     
     }
-    
-
-
-
-    //set default store data
-
-    
+        
       
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+
+
 class CardPeople {
     private $firstName;
     private $lastName;
@@ -10,9 +12,10 @@ class CardPeople {
     private $image;
     private $email;
     private $phone;
+    private $displayName;
 
 
-    public function __construct($number ,$email , $gender, $birth_day ,$firstName, $lastName, $age , $image , $phone) {
+    public function __construct($number ,$email , $gender, $birth_day ,$firstName, $lastName, $age , $image , $phone , $displayName) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->age = $age;
@@ -22,20 +25,19 @@ class CardPeople {
         $this->image = $image;
         $this->email = $email;
         $this->phone = $phone;
+        $this->displayName = $displayName;
     }
 
 
-    public function getThaiDate($today){
-        $strYear=       date("Y",strtotime($strDate))+543;
-        $strMonth=      date("n",strtotime($strDate));
-        $strDay=        date("j",strtotime($strDate));
-        $strHour=       date("H",strtotime($strDate));
-        $strMinute=     date("i",strtotime($strDate));
-        $strSeconds=    date("s",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-        $strMonthThai=$strMonthCut[$strMonth]; 
-        $strYearCut = substr($strYear,0,4); //เอา2ตัวท้ายของปี .พ.ศ.
-        return "$strDay $strMonthThai $strYearCut";
+    public function getThaiDate($date){
+        $newDate = new DateTime($date);
+        $mday = $newDate->format("j");  // Use "j" to get day without leading zeros
+        $mon = $newDate->format("n");
+        $year = $newDate->format("Y");
+        $year = $year + 543;
+        $thmonth = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+        $mon = $thmonth[$mon];
+        return "$mday $mon $year";
     }
 
 
@@ -50,12 +52,13 @@ class CardPeople {
 
         $more_name =  $this->firstName. ' ' . $this->lastName;
         $html  = '<a href="'.$url.'">';
-        $html .= '<div class="w-full hover:scale-95 cursor-pointer transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid-cols-9 ">';
+        $html .= '<div class="w-full hover:scale-95 cursor-pointer transition-all duration-300 bg-white h-auto border-b border-b-2  py-6 grid grid-cols-10 ">';
         $html .=    '<div class="flex items-center px-4 xl:px-6">';
         $html .= "<div class='avatar w-[60px] h-[60px] bg-gray-500 rounded-full object-cover bg-center shadow-sm bg-cover' style='background-image: url(" . $this->image . ")'></div>";
         $html .=    '</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.$this->number.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.((strlen($this->firstName) + strlen($this->lastName)) >= 15 ? substr($more_name ,0 , 15)."..." : $more_name) .'</div>';
+        $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->displayName.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->phone.'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide flex justify-center lg:text-md whitespace-nowrap">'.$this->age." ปี".'</div>';
         $html .=    '<div class="flex items-center text-slate-600 tracking-wide lg:text-md whitespace-nowrap">'.$this->getThaiDate($this->birth_day).'</div>';

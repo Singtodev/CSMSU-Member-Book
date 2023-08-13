@@ -1,17 +1,25 @@
 <?php
+
     session_start();
+    
     include("./utils/condb.php");
-    include("./utils/datethai.php");
     include("./services/useUserService.php");
     include_once('./components/cards/card_people.php');
     include_once('./components/navbar.php');
     include_once('./services/useSweetAlertService.php');
-    $activePage = 0;
-    $navbar = new Navbar($activePage);
-    $sweet_srv = new UseSweetAlert();
-    $user_srv = new UseUserService($condb);
     
+    $user_srv = new UseUserService($condb);
+    $sweet_srv = new UseSweetAlert();
+    $activePage = 1;
+    $navbar = new Navbar($activePage);
+    
+    $currentDate = new DateTime();
+    $fiveYearsAgo = $currentDate->sub(new DateInterval('P1Y'));
+
+
+
 ?>
+
 <!doctype html>
 <html>
 <head>
@@ -28,9 +36,21 @@
 
 <?php
 
+
+
+
+
+
     if(isset($_GET['id'])) {
         // Get the value of 'id' parameter
         $memberId = $_GET['id'];
+
+        if($_SESSION['edit_member_id']){
+            $memberId = $_SESSION['edit_member_id'];
+        }else{
+            $_SESSION['edit_member_id'] = $memberId;
+        }
+
 
         $user = $user_srv->getUserById($memberId);
 
@@ -49,7 +69,29 @@
         }
 
     } else {
-        echo "No member ID provided.";
+
+        if($_SESSION['edit_member_id']){
+        
+            $memberId = $_SESSION['edit_member_id'];
+
+            $user = $user_srv->getUserById($memberId);
+    
+            if($user->num_rows > 0){
+                //echo 'Fetching data successfully.';
+            }else{
+                echo '';
+                $msg = 'User is not found';
+                $sweet_srv->showPopUpFailed($msg);
+                echo '<script>';
+                echo 'setTimeout(function() {
+                    window.location.href = "index.php";
+                }, 3000)'; // 3000 milliseconds = 3 seconds
+                echo '</script>';
+                die();
+            }
+        }
+
+
     }
 
 
@@ -78,11 +120,11 @@
                         </div>
                     </a>
 
-
                 </div>
 
             </div>
 
+            
             <?php $navbar->build(); ?>
 
             <div class="navbar_container_right flex flex-row gap-x-3 items-center">
@@ -109,7 +151,7 @@
                                 <div class="text-white  bg-blue-600 px-6 font-bold py-2 rounded cursor-pointer hover:opacity-60 transition-all duration-300">Register</div>
                         </div> -->
             </div>
-            
+
                     
 
 
@@ -123,82 +165,124 @@
                 <div class="group px-5  flex flex-row items-center inline-block  gap-2 w-[34rem] transition-all duration-300 rounded-2xl py-2 focus-within:rounded-3xl px-1 focus-within:border-sky-500 focus-within:ring-sky-500  focus-within:shadow-2xl">
                     <div class="focus:outline-none  py-5  rounded-2xl transition-all duration-300   w-full h-full border-none outline-none" ></div>
                     <div class="w-[3rem] py-3 rounded-md flex items-center justify-center text-black  h-full">
-    
+
                     </div>
                 </div>
         </div>
 
-        <div class="container min-w-[500px] h-auto my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
+        <div class="container min-w-[500px] min-h-[800px] my-1 mb-4 my-4 p-2 bg-white rounded-2xl">
             <div class="w-full flex items-center justify-end px-4 border-b-2 py-4"> 
-                <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">Contacts Members</span>
+                <span class="px-6 mb-6 text-xl p-2 text-white bg-blue-600 inline-block rounded-2xl text-slate-900 text-white ">Update Member</span>
              </div>
+             <?php
+                
+            if($row = $user->fetch_assoc()){ ?>
 
-             <div class="relative w-full h-full flex justify-center items-center flex flex-col ">
-                <div class="font-bold max-w-[45rem] min-w-[45rem] py-2   my-2 text-2xl flex items-center justify-center uppercase">
-                </div>
-                
-                <?php
-                
-                    if($row = $user->fetch_assoc()){ 
-                        ?>
-                        <div class="max-w-[45rem] min-w-[45rem] py-2 flex items-center justify-center ">
-                            <div class="avatar w-[15rem] h-[15rem] bg-cover object-cover bg-center rounded-2xl bg-slate-300 rounded md text-black bg-[url('<?php echo $row['m_avatar_url'] ?>')] ">
-               
+             <form action="./member_edit.php" class="from_insert_table]  w-full h-full flex flex-row justify-center py-4">
+                <div class="group  max-w-[45rem] min-w-[45rem] flex flex-col gap-y-6">
+                    <div class="text-2xl font-bold mb-4 text-center">Do you want to Update member <?php echo $row['m_email']?> ?</div>
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Email</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="email" value="<?php echo $row['m_email']?>" required name="email" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">FirstName</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" value="<?php echo $row['m_fname']?>" required name="fname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">LastName</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" value="<?php echo $row['m_lname']?>" required name="lname" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">DisplayName</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input type="text" value="<?php echo $row['m_display_name']?>" required name="display_name" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Gender</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <div class="grid gird-cols-3">
+                                <select value="<?php echo $row['m_gender']?>" required class="outline-none shadow-md px-2 rounded-md" name="gender" >
+                                <option <?php echo $row['m_gender'] == 'm' ? 'selected' : ''; ?> value="m">Male</option>
+                                <option <?php echo $row['m_gender'] == 'f' ? 'selected' : ''; ?> value="f">Female</option>
+                                <option <?php echo $row['m_gender'] == 'o' ? 'selected' : ''; ?> value="o">Others</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="flex flex-col min-w-[45rem] max-w-[45rem] my-5">
-                            <div class="group flex flex-row gap-2 my-4 items-center">
-                                <div class=" bg-slate-300 px-4 rounded-md">Email</div>
-                                <div class=""><?php echo $row['m_email'] ?></div>
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Birthday</div>
+                                <div class="text-[8px] text-red-300">* Required #note current - 1 Years </div>
                             </div>
-                            <div class="group flex flex-row gap-2 my-4 items-center">
-                                <div class=" bg-slate-300 px-4 rounded-md">Full Name</div>
-                                <div class=""><?php echo $row['m_fname'] ?> <?php echo $row['m_lname'] ?></div>
+                            <div class="grid gird-cols-3">
+                                <input value="<?php echo $row['m_birthday']?>" required type="date" max="<?php echo $fiveYearsAgo->format('Y-m-d')?>" name="birthday" class="outline-none shadow-md px-2 rounded-md" />
                             </div>
-                            <div class="group flex flex-row gap-2 my-4 items-center">
-                                <div class=" bg-slate-300 px-4 rounded-md">Gender</div>
-                                <div class="">
-                                <?php echo $row['m_gender'] == 'm' ? '<i class="fa-solid fa-person text-3xl text-cyan-400"></i>' : ($row['m_gender'] == 'f' ? '<i class="fa-solid fa-person text-3xl text-pink-400"></i>' : '<i class="fa-solid fa-person text-3xl text-gray-400"></i>') ?>
-                                </div>
-                            </div>
-                            <div class="group flex flex-row gap-2 my-4 items-center">
-                                <div class="bg-slate-300 px-4 rounded-md">Age</div>
-                                <div class=""><?php echo $row['m_age'] ?> ปี </div>
-                            </div>
-                            <div class="group flex flex-row gap-2 my-4 items-center">
-                                <div class="bg-slate-300 px-4 rounded-md">Birthday</div>
-                                <div class=""><?php echo getThaiDate($row['m_birthday']) ?></div>
-                            </div>
-
-                            <div class="group flex flex-row gap-2 my-4 items-center">
-                                <div class="bg-slate-300 px-4 rounded-md">Phone</div>
-                                <div class=""><?php echo $row['m_phone'] ?></div>
-                            </div>
-
-
                         </div>
+                    </div>
 
-                        <div class="flex flex-row mt-4 gap-2 mb-5">
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Phone</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input value="<?php echo $row['m_phone']?>" type="text" required name="phone" minLength="0" maxLength="10" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
 
-                            <a href="./member_edit.php?">
-                                <div class="bg-blue-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                                    Update
-                                </div>
-                            </a>
-                                <div class="bg-red-600 py-2 px-4 rounded-md text-white cursor-pointer hover:opacity-50 transition-all duration-300 flex flex-row gap-x-4 items-center">
-                                <i class="fa-solid fa-trash"></i>    
-                                    Delete
-                                </div>
-                        </div>      
+                    <div class="mt-3">
+                        <div class="group _input_group grid grid-cols-3 gap-x-3">
+                            <div class="flex gap-x-2 flex-row  justify-start items-center py-2">
+                                <div class="text-md bg-slate-300 px-5 py-1 rounded-xl">Avatar URL</div>
+                                <div class="text-[8px] text-red-300">* Required</div>
+                            </div>
+                            <input  value="<?php echo $row['m_avatar_url']?>" type="text" required name="avatar_url" minLength="0" maxLength="1000" required class="cols-span-3 w-full shadow-md outline-none px-3 py-1 rounded-md" />
+                        </div>
+                    </div>
 
+                    <div class="py-2 flex flex-row justify-end">
+                        <button type="submit" class="bg-lime-600 text-white py-2 px-6 hover:opacity-50 transition-all duration-300 rounded-md">Submit</button>
+                    </div>
+                            
 
                     <?php } ?>
-                
-                    
+                </div>
+    
 
-             </div>
+             </form>
+
+
+
+
         </div>
 
 
@@ -219,6 +303,60 @@
 <div class="w-full absolute bg-gradient-to-r from-cyan-500 to-blue-500 h-[45rem]" style="clip-path: polygon(0 0, 100% 0, 100% 73%, 0% 100%);"></div>
 
 </div>
+
+<?php
+
+if(isset($_GET['display_name']) && isset($_GET['phone']) && isset($_GET['email']) && isset($_GET['gender']) && isset($_GET['birthday']) && isset($_GET['fname']) && isset($_GET['lname']) && isset($_GET['avatar_url'])){
+    $user = array(
+        'id' => $_SESSION['edit_member_id'],
+        'email' => $_GET['email'],
+        'gender' => $_GET['gender'],
+        'birthday' => $_GET['birthday'],
+        'fname' => $_GET['fname'],
+        'lname' => $_GET['lname'],
+        'avatar_url' => $_GET['avatar_url'],
+        'phone' => $_GET['phone'],
+        'display_name' => $_GET['display_name']
+    );
+
+    $result = $user_srv->updateUserToDatabase($user);
+
+    if($result){
+        if($result['status'] == true){
+            $sweet_srv->showPopUpSuccess("Update Member Success");
+            echo '<script>';
+            echo 'setTimeout(function() {
+                window.location.href = "index.php";
+            }, 3000)'; // 3000 milliseconds = 3 seconds
+            echo '</script>';
+            die();
+        }else{
+
+            $msg = 'Update Member Failed ';
+            $msg .= $result['message'];
+
+            $sweet_srv->showPopUpFailed($msg);
+            echo '<script>';
+            echo 'setTimeout(function() {
+                window.location.href = "index.php";
+            }, 3000)'; // 3000 milliseconds = 3 seconds
+            echo '</script>';
+            die();
+        }
+    
+    }
+
+    
+
+
+
+    //set default store data
+
+    
+      
+}
+
+?>
 
 </body>
 </html>
