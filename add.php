@@ -116,7 +116,7 @@
 
              <form action="./add.php" class="from_insert_table]  w-full h-full flex flex-row justify-center py-4">
                 <div class="group  max-w-[45rem] min-w-[45rem] flex flex-col gap-y-6">
-                    <div class="text-2xl font-bold mb-4 text-center">Do you want to insert member ?</div>
+                    <div class="text-2xl font-bold mb-4 text-center">Do you want to Insert member ?</div>
 
                     <div class="mt-3">
                         <div class="group _input_group grid grid-cols-3 gap-x-3">
