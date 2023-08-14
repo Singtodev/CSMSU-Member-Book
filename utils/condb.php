@@ -1,7 +1,7 @@
 <?php
     $host = "localhost";
     $user = "demo";
-    $pass = "adb123";
+    $pass = "abc123";
     $dbname = "book_member";
     $condb = mysqli_connect($host,$user,$pass,$dbname);
 
